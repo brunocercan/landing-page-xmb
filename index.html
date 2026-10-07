@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruno Cercan Garcia — XMB</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Fundo animado (ondas estilo PSP) -->
+  <canvas id="waves"></canvas>
+
+  <!-- Barra superior estilo PSP -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo">BRUNO<span class="logo-dot">●</span></span>
+    </div>
+    <div class="topbar-right">
+      <span id="clock"></span>
+      <span class="battery">
+        <span class="battery-fill"></span>
+      </span>
+    </div>
+  </header>
+
+  <!-- XMB -->
+  <main class="xmb">
+    <div class="xmb-bar" id="xmb-bar"><!-- categorias via JS --></div>
+  </main>
+
+  <!-- Painel de detalhes -->
+  <section class="detail" id="detail">
+    <!-- conteúdo via JS -->
+  </section>
+
+  <!-- Dicas de navegação -->
+  <footer class="hints">
+    <div class="hint"><span class="key">◀ ▶</span> ou <span class="key">scroll</span> categorias</div>
+    <div class="hint"><span class="key">▲ ▼</span> itens</div>
+    <div class="hint"><span class="key">Enter</span> abrir</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

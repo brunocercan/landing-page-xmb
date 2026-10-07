@@ -1,0 +1,377 @@
+/* ============================================================
+   XMB Portfolio — estilo PSP
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+:root {
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.65);
+  --glow: rgba(255, 255, 255, 0.9);
+  --detail-width: 380px;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #05070f;
+  color: var(--text);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+/* ---------- Fundo (canvas de ondas) ---------- */
+#waves {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+
+/* ---------- Barra superior ---------- */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.logo-dot {
+  color: #4fc3f7;
+  text-shadow: 0 0 10px #4fc3f7;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#clock {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.battery {
+  width: 34px;
+  height: 14px;
+  border: 2px solid var(--text);
+  border-radius: 3px;
+  position: relative;
+  padding: 1px;
+}
+
+.battery::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 3px;
+  width: 3px;
+  height: 6px;
+  background: var(--text);
+  border-radius: 0 2px 2px 0;
+}
+
+.battery-fill {
+  display: block;
+  height: 100%;
+  width: 78%;
+  background: var(--text);
+  border-radius: 1px;
+  box-shadow: 0 0 6px var(--glow);
+}
+
+/* ---------- XMB ---------- */
+.xmb {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.xmb-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  padding: 0 calc(50vw - 60px); /* centraliza o item ativo */
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* Linha horizontal atrás dos ícones */
+.xmb::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25) 20%,
+    rgba(255, 255, 255, 0.25) 80%,
+    transparent
+  );
+}
+
+.category {
+  position: relative;
+  flex: 0 0 auto;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cat-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.35s ease;
+  filter: grayscale(70%) brightness(0.75);
+}
+
+.cat-label {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.category.active .cat-icon {
+  transform: scale(1.5) translateY(-6px);
+  filter: grayscale(0%) brightness(1.15) drop-shadow(0 0 14px var(--glow));
+}
+
+.category.active .cat-label {
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--text);
+}
+
+/* Linha vertical abaixo da categoria ativa */
+.category.active::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 78px;
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Itens verticais ---------- */
+.items {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  max-height: calc(100vh - 240px);
+  overflow: hidden;
+}
+
+.category.active .items {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.item {
+  padding: 8px 14px;
+  margin: 2px 0;
+  font-size: 14px;
+  white-space: nowrap;
+  color: var(--text-dim);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.25s ease, color 0.25s ease,
+              background 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item .item-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: auto;
+}
+
+.item.selected {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
+              0 0 18px rgba(255, 255, 255, 0.12);
+  transform: translateX(6px);
+}
+
+.item.selected::before {
+  content: "▶";
+  position: absolute;
+  left: -18px;
+  font-size: 10px;
+  color: var(--text);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ---------- Painel de detalhes ---------- */
+.detail {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--detail-width);
+  max-width: calc(100vw - 64px);
+  z-index: 3;
+  padding: 26px 28px;
+  background: rgba(8, 12, 24, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.45),
+              inset 0 0 30px rgba(255, 255, 255, 0.03);
+  opacity: 1;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.detail.swap {
+  opacity: 0;
+  transform: translateY(calc(-50% + 12px));
+}
+
+.detail h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.detail .detail-sub {
+  font-size: 13px;
+  color: #4fc3f7;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.detail p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  text-shadow: none;
+}
+
+.detail .chips {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  text-shadow: none;
+  letter-spacing: 0.3px;
+}
+
+.detail a {
+  color: #4fc3f7;
+  word-break: break-all;
+}
+
+/* ---------- Dicas ---------- */
+.hints {
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: none;
+}
+
+.key {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  padding: 1px 7px;
+  color: var(--text);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 900px) {
+  .detail {
+    right: 50%;
+    transform: translate(50%, -50%) translateY(120px);
+    width: min(420px, calc(100vw - 40px));
+    max-height: 32vh;
+    overflow-y: auto;
+  }
+
+  .detail.swap {
+    transform: translate(50%, calc(-50% + 12px)) translateY(120px);
+  }
+
+  .xmb-bar {
+    gap: 40px;
+    padding: 0 calc(50vw - 50px);
+  }
+
+  .category {
+    width: 100px;
+  }
+
+  .items {
+    top: 96px;
+    width: 220px;
+  }
+
+  .hints {
+    display: none;
+  }
+}
