@@ -231,6 +231,12 @@ html, body {
   margin-left: auto;
 }
 
+.item .item-sub.star {
+  color: #ffd166;
+  text-shadow: 0 0 8px rgba(255, 209, 102, 0.6);
+  letter-spacing: 0.5px;
+}
+
 .item.selected {
   color: var(--text);
   background: rgba(255, 255, 255, 0.12);

@@ -77,6 +77,48 @@ const XMB = [
     ]
   },
   {
+    label: "Projetos",
+    icon: "🚀",
+    items: [
+      {
+        label: "Persona API",
+        sub: "★ Destaque",
+        star: true,
+        title: "Persona MicroService",
+        subtitle: "Projeto pessoal · API REST · Destaque",
+        html: `
+          <p>Microserviço em C#/.NET que expõe as respostas de classe dos jogos Persona 3 Reload, Persona 4 Golden e Persona 5 Royal. Persona 3 Reload 100% concluído, com deploy no Render.</p>
+          <p style="margin-top:10px"><a href="https://persona3.onrender.com/class/p3r/october/30" target="_blank" rel="noopener">API ao vivo ↗</a></p>
+          <p style="margin-top:6px"><a href="https://github.com/brunocercan/PersonaMicroService" target="_blank" rel="noopener">github.com/brunocercan/PersonaMicroService</a></p>
+        `,
+        link: "https://github.com/brunocercan/PersonaMicroService",
+        chips: ["C#", ".NET", "API REST", "Render"]
+      },
+      {
+        label: "Ticket API",
+        sub: "★ Destaque",
+        star: true,
+        title: "Ticket API",
+        subtitle: "Projeto pessoal · API REST · Destaque",
+        html: `
+          <p>API REST para gerenciamento de tickets de Help Desk em .NET 9, com EF Core e Dapper, SQL Server, autenticação JWT, Docker e testes em xUnit/Moq. Inclui frontend em Angular.</p>
+          <p style="margin-top:10px"><a href="https://github.com/brunocercan/ticket-api" target="_blank" rel="noopener">github.com/brunocercan/ticket-api</a></p>
+        `,
+        link: "https://github.com/brunocercan/ticket-api",
+        chips: ["C#", ".NET 9", "EF Core", "Dapper", "JWT", "Docker", "xUnit"]
+      },
+      {
+        label: "GitHub",
+        sub: "↗",
+        title: "Projetos Pessoais",
+        subtitle: "Todos os repositórios no GitHub",
+        html: `<p><a href="https://github.com/brunocercan" target="_blank" rel="noopener">github.com/brunocercan</a></p>`,
+        link: "https://github.com/brunocercan",
+        chips: ["C#", ".NET", "Open Source"]
+      }
+    ]
+  },
+  {
     label: "Formação",
     icon: "🎓",
     items: [
@@ -197,7 +239,9 @@ function renderBar() {
       itemEl.className =
         "item" + (ci === catIndex && ii === itemIndex ? " selected" : "");
       itemEl.innerHTML = `<span>${item.label}</span>${
-        item.sub ? `<span class="item-sub">${item.sub}</span>` : ""
+        item.sub
+          ? `<span class="item-sub${item.star ? " star" : ""}">${item.sub}</span>`
+          : ""
       }`;
       itemEl.addEventListener("click", () => {
         if (ci === catIndex && ii === itemIndex) {
